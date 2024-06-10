@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menosa Store</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <style>
+        .mySlides {display:none; padding-top:20px;}
+        .w3-left, .w3-right, .w3-badge {cursor:pointer}
+        .w3-badge {height:13px;width:13px;padding:0}
+        body {
+            background-color: #363062;
+        }
+        .row {
+            padding-bottom: 10px;
+        }
+        .waves {
+            display: grid;
+            grid-template-columns: auto;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .w3-display-container {
+            padding-top: 10vh;
+        }
+        .w3-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            padding: 10px 0;
+        }
+        
+        /* .mySlides {display:none; padding-top:20px;}
+        .w3-left, .w3-right, .w3-badge {cursor:pointer}
+        .w3-badge {height:13px;width:13px;padding:0}
+        body {
+                background-color: #363062;
+            }
+        .row {
+            padding-bottom: 10px;
+        }
+        .waves {
+            display: grid;
+            grid-template-columns: auto;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .w3-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            padding: 10px 0;
+        }
+
+        .footer{
+            background-color: #F5E8C7;
+        }
+        .fkiri img {
+            height: 90px;
+        } */
+        .footer {
+            padding: 0;
+            margin: 0;
+        }
+        
+    </style>
+</head>
+<body>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary bg-light">
+
+            <a href='index.php' class='navbar-brand'>
+                <img src="asset/logo.jpg" class="navbar-logo" alt="logo">
+                <b>MenosaStore</b>
+            </a>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+                <li class='nav-item'><a href="" class="nav-link">Category</a></li>    
+            </ul>
+            <?php if(isset($_SESSION['username'])) { ?>
+            <div class="profile-dropdown">
+                <div onclick="toggle()" class="profile-dropdown-btn">
+                    <div class="profile-img">
+                        <i class="fa-solid fa-circle"></i>
+                    </div>
+
+                    <span>
+                        <?php 
+                        if(isset($_SESSION['username'])) {
+                            echo $_SESSION['username']; // Tampilkan nama pengguna dari data pengguna
+                        } 
+                        ?>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </span>
+                </div>
+
+                <ul class="profile-dropdown-list">
+                <li class="profile-dropdown-list-item">
+                    <a href="index.php?page=profile">
+                    <i class="fa-regular fa-user"></i>
+                    Profile
+                    </a>
+                </li>
+
+                <li class="profile-dropdown-list-item open-modal-btn" id="openModalBtn">
+                    <a href="#" id="openModalBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Upload
+                    </a>
+                </li>
+
+                <li class="profile-dropdown-list-item">
+                    <a href="">
+                    <i class="fa-regular fa-circle-question"></i>
+                    Help & Support
+                    </a>
+                </li>
+                <hr />
+
+                <li class="profile-dropdown-list-item">
+                    <a href="logout.php">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Log out
+                    </a>
+                </li>
+                </ul>
+            </div>
+            <?php } else {
+               echo '<a href="" class="guest">Login</a>
+               ';
+            }
+            ?>
+        </nav>
+        <!-- slideshow -->
+        <div class="w3-content w3-display-container" style="max-width:800px">
+            <img class="mySlides" src="asset/promo1.jpg">
+            <img class="mySlides" src="asset/promo2.jpg">
+            <img class="mySlides" src="asset/promo3.jpg">
+            <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" >
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+            </div>
+        </div>
+        <!-- content -->
+        <div class="waves">
+            <svg id="wave" style="transform:rotate(0deg); transition: 0.3s" viewBox="0 0 1440 250" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(67, 85, 133, 1)" offset="0%"></stop><stop stop-color="rgba(67, 85, 133, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,25L34.3,37.5C68.6,50,137,75,206,83.3C274.3,92,343,83,411,104.2C480,125,549,175,617,183.3C685.7,192,754,158,823,150C891.4,142,960,158,1029,175C1097.1,192,1166,208,1234,200C1302.9,192,1371,158,1440,141.7C1508.6,125,1577,125,1646,112.5C1714.3,100,1783,75,1851,75C1920,75,1989,100,2057,120.8C2125.7,142,2194,158,2263,175C2331.4,192,2400,208,2469,208.3C2537.1,208,2606,192,2674,170.8C2742.9,150,2811,125,2880,108.3C2948.6,92,3017,83,3086,91.7C3154.3,100,3223,125,3291,116.7C3360,108,3429,67,3497,50C3565.7,33,3634,42,3703,54.2C3771.4,67,3840,83,3909,79.2C3977.1,75,4046,50,4114,33.3C4182.9,17,4251,8,4320,16.7C4388.6,25,4457,50,4526,87.5C4594.3,125,4663,175,4731,187.5C4800,200,4869,175,4903,162.5L4937.1,150L4937.1,250L4902.9,250C4868.6,250,4800,250,4731,250C4662.9,250,4594,250,4526,250C4457.1,250,4389,250,4320,250C4251.4,250,4183,250,4114,250C4045.7,250,3977,250,3909,250C3840,250,3771,250,3703,250C3634.3,250,3566,250,3497,250C3428.6,250,3360,250,3291,250C3222.9,250,3154,250,3086,250C3017.1,250,2949,250,2880,250C2811.4,250,2743,250,2674,250C2605.7,250,2537,250,2469,250C2400,250,2331,250,2263,250C2194.3,250,2126,250,2057,250C1988.6,250,1920,250,1851,250C1782.9,250,1714,250,1646,250C1577.1,250,1509,250,1440,250C1371.4,250,1303,250,1234,250C1165.7,250,1097,250,1029,250C960,250,891,250,823,250C754.3,250,686,250,617,250C548.6,250,480,250,411,250C342.9,250,274,250,206,250C137.1,250,69,250,34,250L0,250Z"></path></svg>
+        </div>
+        <div style="background-color: #435585;">
+            <h1 style="font-size:4vw; color: white; font-family: fantasy; text-align: center;">Pick Your Game</h1>
+            <div class="container">
+                <div class="row justify-content-evenly">
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="transaction.html">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center; text-decoration: none;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                                <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-evenly">
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                                <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                            <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card " style="width: 12.625rem;">
+                            <a href="">
+                                <img class="card-img-top" src="asset/valorant2.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">Valorant</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        
+        <div class="footer" style="background-color: #F5E8C7;">
+        <div class="waves">
+        <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 170" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(245, 232, 199, 1)" offset="0%"></stop><stop stop-color="rgba(245, 232, 199, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,34L40,31.2C80,28,160,23,240,42.5C320,62,400,108,480,107.7C560,108,640,62,720,53.8C800,45,880,74,960,90.7C1040,108,1120,113,1200,104.8C1280,96,1360,74,1440,53.8C1520,34,1600,17,1680,22.7C1760,28,1840,57,1920,82.2C2000,108,2080,130,2160,121.8C2240,113,2320,74,2400,68C2480,62,2560,91,2640,107.7C2720,125,2800,130,2880,113.3C2960,96,3040,57,3120,39.7C3200,23,3280,28,3360,31.2C3440,34,3520,34,3600,36.8C3680,40,3760,45,3840,45.3C3920,45,4000,40,4080,42.5C4160,45,4240,57,4320,59.5C4400,62,4480,57,4560,56.7C4640,57,4720,62,4800,76.5C4880,91,4960,113,5040,104.8C5120,96,5200,57,5280,59.5C5360,62,5440,108,5520,130.3C5600,153,5680,153,5720,153L5760,153L5760,170L5720,170C5680,170,5600,170,5520,170C5440,170,5360,170,5280,170C5200,170,5120,170,5040,170C4960,170,4880,170,4800,170C4720,170,4640,170,4560,170C4480,170,4400,170,4320,170C4240,170,4160,170,4080,170C4000,170,3920,170,3840,170C3760,170,3680,170,3600,170C3520,170,3440,170,3360,170C3280,170,3200,170,3120,170C3040,170,2960,170,2880,170C2800,170,2720,170,2640,170C2560,170,2480,170,2400,170C2320,170,2240,170,2160,170C2080,170,2000,170,1920,170C1840,170,1760,170,1680,170C1600,170,1520,170,1440,170C1360,170,1280,170,1200,170C1120,170,1040,170,960,170C880,170,800,170,720,170C640,170,560,170,480,170C400,170,320,170,240,170C160,170,80,170,40,170L0,170Z"></path></svg>
+        </div>
+            <div class="grid" style="--bs-columns: 3;">
+                <div class="grid" style="--bs-row: 3;">
+                    <img src="asset/logo.jpg" class="rounded-circle" height="50" alt="logo" loading="lazy"/>
+                    <h4 class="g-col-4" style="grid-row: 2">Menosa Store</h4>
+                    <b class="g-col-4" style="grid-row: 3">Top Up game hanya di Menosa Store</b>
+                </div>
+                <div class="grid fkiri" style="--bs-row: 2; --bs-column: 4;">
+                    <h4 class="g-col-4">Jangan lupa ikuti sosial media kami di</h4>
+                    <div class="g-start-1" style="grid-row: 2"><a href=""><img src="asset/Instagram_icon.png" alt="Instagram"/></a></div>
+                    <div class="g-start-2" style="grid-row: 2"><a href=""><img src="asset/Facebook_icon.png" alt="Instagram"/></a></div>
+                    <div class="g-start-3" style="grid-row: 2"><a href=""><img src="asset/tiktok_icon.png" alt="Instagram" style="border-radius: 15px;"/></a></div>
+                    <div class="g-start-4" style="grid-row: 2"><a href=""><img src="asset/whatsapp_icon.png" alt="Instagram"/></a></div>
+                </div>
+            </div>
+        </div>
+    <script>
+        var slideIndex = 0;
+        showDivs();
+
+        // Fungsi untuk menampilkan gambar secara otomatis setiap 2 detik
+        function showDivs() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) {slideIndex = 1}
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-white", "");
+        }
+        x[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " w3-white";
+        setTimeout(showDivs, 5000); // Ganti gambar setiap 2 detik
+        }
+
+        function currentDiv(n) {
+        showDivs(slideIndex = n);
+        }
+    </script>
+</body>
+</html>

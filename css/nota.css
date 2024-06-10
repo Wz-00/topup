@@ -1,0 +1,10 @@
+h3 {
+    color: white;
+    text-align: center;
+}
+.nota {
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 12px;
+}
