@@ -12,7 +12,7 @@
             </div>
             <div class="grid fkiri" style="--bs-row: 2; --bs-column: 4;">
                 <h4 class="g-col-4">Jangan lupa ikuti sosial media kami di</h4>
-                <div class="g-start-1" style="grid-row: 2"><a href=""><img src="asset/Instagram_icon.png" alt="Instagram"/></a></div>
+                <div class="g-start-1" style="grid-row: 2"><a href="https://www.instagram.com/menosastore?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><img src="asset/Instagram_icon.png" alt="Instagram"/></a></div>
                 <div class="g-start-2" style="grid-row: 2"><a href=""><img src="asset/Facebook_icon.png" alt="Instagram"/></a></div>
                 <div class="g-start-3" style="grid-row: 2"><a href=""><img src="asset/tiktok_icon.png" alt="Instagram" style="border-radius: 15px;"/></a></div>
                 <div class="g-start-4" style="grid-row: 2"><a href=""><img src="asset/whatsapp_icon.png" alt="Instagram"/></a></div>

@@ -180,8 +180,41 @@
                 </table>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-warning" name="edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" name="edit" data-bs-target="#myModal2" data-bs-toggle="modal"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="fa-solid fa-gamepad"></i> Edit Game</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+              <div class="modal-body">
+                <table class="table table-striped bordered">
+                  <!-- sesuaikan dengan button yang ditekan/ ambil dari database -->
+                  <tr>
+                    <td>Game</td>
+                    <td><input type="text" placeholder="Valorant" name=""></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td><input type="text" placeholder="lorem ipsum" name=""></td>
+                  </tr>
+                  <tr>
+                    <td>Image</td>
+                    <td><input type="text"></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" name="save"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
               </div>
             </form>
           </div>

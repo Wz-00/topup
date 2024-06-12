@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
 } else {
@@ -124,7 +124,7 @@ if (isset($_SESSION['role'])) {
                             echo $_SESSION['username']; // Tampilkan nama pengguna dari data pengguna
                         }
                         ?>
-                        
+
                         <i class="fa-solid fa-angle-down"></i>
                     </span>
                 </div>
@@ -138,9 +138,9 @@ if (isset($_SESSION['role'])) {
                     </li>
 
                     <li class="profile-dropdown-list-item open-modal-btn" id="openModalBtn">
-                        <a href="#" id="openModalBtn">
-                            <i class="fa-solid fa-plus"></i>
-                            Upload
+                        <a href="#">
+                            <i class="fa-regular fa-bell"></i>
+                            Notification
                         </a>
                     </li>
 

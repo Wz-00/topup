@@ -268,7 +268,7 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="confirm"><i class="bi bi-plus-lg"></i> Konfirmasi</button>
+                                    <button type="submit" class="btn btn-primary" name="confirm"><i class="bi bi-plus-lg"></i><a href="index.php?page=nota" style="text-decoration:none; color:white;"> Konfirmasi</a></button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                 </div>
                             </form>

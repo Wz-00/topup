@@ -14,7 +14,7 @@ if (!empty($_SESSION['role'])) {
         }
     } else {
         if (!empty($_GET['page'])) {
-            include 'admin/module/' . $_GET['page'] . '/index.php';
+            include 'admin/dashboard/' . $_GET['page'] . '/index.php';
         } else {
             include 'admin/template/body.php';
         }
@@ -22,7 +22,7 @@ if (!empty($_SESSION['role'])) {
     }
 } else {
     if (!empty($_GET['page'])) {
-        include 'admin/module/' . $_GET['page'] . '/index.php';
+        include 'admin/dashboard/' . $_GET['page'] . '/index.php';
     } else {
         include 'admin/template/body.php';
     }
