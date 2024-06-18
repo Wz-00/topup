@@ -19,32 +19,7 @@
             </div>
         </div>
     </div>
-    <script>
-        var slideIndex = 0;
-        showDivs();
-
-        // Fungsi untuk menampilkan gambar secara otomatis setiap 2 detik
-        function showDivs() {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("demo");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > x.length) {slideIndex = 1}
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" w3-white", "");
-        }
-        x[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " w3-white";
-        setTimeout(showDivs, 5000); // Ganti gambar setiap 2 detik
-        }
-
-        function currentDiv(n) {
-        showDivs(slideIndex = n);
-        }
-    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

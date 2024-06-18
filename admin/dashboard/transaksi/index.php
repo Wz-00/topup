@@ -233,7 +233,7 @@
                                 <i class="bi bi-plus-lg"></i> Konfirmasi
                             </button>
                         </div>
-                        
+
                     </div>
                 </form>
                 <div class="modal fade" id="myModal1" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -246,6 +246,10 @@
                             <form action="" method="POST">
                                 <div class="modal-body">
                                     <table class="table table-striped bordered">
+                                        <tr>
+                                            <td>ID Game</td>
+                                            <td>N/A</td>
+                                        </tr>
                                         <tr>
                                             <td>Kategori Layanan</td>
                                             <td>N/A</td>
@@ -278,5 +282,3 @@
             </div>
         </div>
     </div>
-    
-    
