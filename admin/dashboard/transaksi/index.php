@@ -118,23 +118,23 @@ $respay = $conn->query($qpay);
                                 <table class="table table-striped bordered">
                                     <tr>
                                         <td>ID Game</td>
-                                        <td id="modalGameId">N/A</td>
+                                        <td id="modalGameId"></td>
                                     </tr>
                                     <tr>
                                         <td>Kategori Layanan</td>
-                                        <td id="modalItem">N/A</td>
+                                        <td id="modalItem"></td>
                                     </tr>
                                     <tr>
                                         <td>Nominal Layanan</td>
-                                        <td id="modalPrice">N/A</td>
+                                        <td id="modalPrice"></td>
                                     </tr>
                                     <tr>
                                         <td>Metode Pembayaran</td>
-                                        <td id="modalPaymentMethod">N/A</td>
+                                        <td id="modalPaymentMethod"></td>
                                     </tr>
                                     <tr>
                                         <td>Nomor WA</td>
-                                        <td id="modalWa">N/A</td>
+                                        <td id="modalWa"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">Pastikan data yang anda masukkan sudah benar. Kesalahan input bukan merupakan tanggung jawab kami</td>
