@@ -104,7 +104,7 @@ if (isset($_SESSION['role'])) {
     <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary bg-light">
 
         <a href='index.php' class='navbar-brand'>
-            <img src="asset/logo.jpg" class="navbar-logo" alt="logo">
+            <img src="asset/icon/footer/logo.jpg" class="navbar-logo" alt="logo">
             <b>MenosaStore</b>
         </a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">

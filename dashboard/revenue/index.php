@@ -1,3 +1,6 @@
+<?php
+require __DIR__ . '../../../function/check_access.php';
+?>
 <link rel="stylesheet" href="css/revenue.css">
 <div class="container">
     <div class="row">
@@ -82,7 +85,7 @@
                                     <td>610 UC</td>
                                     <td>155,626</td>
                                     <td><span class="badge text-bg-success">Success</span></td>
-                                    <td><a href="" class="btn btn-primary">Detail</a></td>>
+                                    <td><a href="" class="btn btn-primary">Detail</a></td>
                                 </tr>
                                 <tr>
                                     <td>Genshin Impact</td>

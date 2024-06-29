@@ -7,15 +7,17 @@
     border-top-right-radius: 15px;
 }
 
-.number {
-    border: 2px solid white;
+.rounded-circle {
+    display: inline-block;
     position: relative;
-    top: -42px;     
-    border-radius: 50%;
-    text-align: center;
+    width: 35px;
+    height: 35px;
     color: white;
-    padding: 5px 11px;
-    background-color: blue;
+    text-align: center;
+    background-color: #363062;
+    top: -42px;
+    border: solid 3px white;
+    padding-top: 4px;
 }
 
 .bgform {
@@ -40,6 +42,11 @@ label {
     max-width: 200px;
     text-align: center;
 }
+
+input[type="text"] {
+    border: solid 2px #d8d8d8;
+}
+
 input[type="radio"]{
     -webkit-appearance: none;
     position: relative;

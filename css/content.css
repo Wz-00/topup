@@ -1,3 +1,12 @@
+* {
+    margin: 0;
+    top: 0;
+    bottom: 0;
+}
 .card {
-    background-color: #36213d;
+    margin: 20px 0;
+}
+.card a {
+    text-decoration: none;
+    color: black;
 }
