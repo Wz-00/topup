@@ -2,7 +2,7 @@
 session_start();
 require 'function/login.php';
 
-if (isset($_SESSION['uid'])) {
+if (isset($_SESSION['username'])) {
     // Redirect to index.php if already logged in
     header("Location: index.php");
     exit;
@@ -27,6 +27,7 @@ if (isset($_POST["login"])) {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         // username found, set session variables
+        $_SESSION['uid'] = $user['id'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['username'] = $username;
 

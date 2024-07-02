@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2024 at 03:17 PM
+-- Generation Time: Jun 30, 2024 at 04:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -195,12 +195,21 @@ DELIMITER ;
 CREATE TABLE `transaction` (
   `tid` char(32) NOT NULL,
   `uid` char(4) DEFAULT NULL,
+  `IDGame` varchar(40) NOT NULL,
   `pid` char(4) NOT NULL,
   `gid` char(4) NOT NULL,
   `itemid` char(4) NOT NULL,
-  `wa number` int(11) DEFAULT NULL,
-  `status` varchar(11) NOT NULL
+  `wa number` bigint(16) DEFAULT NULL,
+  `status` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`tid`, `uid`, `IDGame`, `pid`, `gid`, `itemid`, `wa number`, `status`) VALUES
+('T001', 'U006', 'UncleOmen1#Omen', 'P001', 'G001', 'I005', 2147483647, 'Menunggu Pembayaran'),
+('T002', 'U006', 'fivesecond#dawg', 'P004', 'G001', 'I005', 85163057189, 'Menunggu Pembayaran');
 
 --
 -- Triggers `transaction`
@@ -237,7 +246,8 @@ INSERT INTO `user` (`uid`, `username`, `email`, `password`, `role`) VALUES
 ('U002', 'alice', 'alice@example.com', '6384e2b2184bcbf58eccf10ca7a6563c', 'user'),
 ('U003', 'John Doe', 'Johndoe@example.com', '$2y$10$IUJL9t0yxyOhGFeIs6.dCOOA5', 'user'),
 ('U004', 'wizz', 'wizz@wizz.co.id', '$2y$10$bwo2yg.Am5GRNTgkNNJvb.ZQh', 'user'),
-('U005', 'admin2', 'admin21@admin.co.id', 'c84258e9c39059a89ab77d846ddab909', 'admin');
+('U005', 'admin2', 'admin21@admin.co.id', 'c84258e9c39059a89ab77d846ddab909', 'admin'),
+('U006', 'johncina', 'johncina@wkwk', '576a0ae80b5931ccd0b85fcad33f9b5b', 'user');
 
 --
 -- Triggers `user`

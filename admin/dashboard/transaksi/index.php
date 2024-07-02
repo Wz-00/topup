@@ -1,5 +1,6 @@
 <?php
 require 'function/conn.php';
+require 'function/transaction.php';
 
 $gid = $_GET['gid'];
 $qgame = "SELECT * FROM game WHERE gid = '$gid'";
@@ -12,6 +13,24 @@ $result = $conn->query($qitem);
 
 $qpay = "SELECT * FROM payment";
 $respay = $conn->query($qpay);
+
+// Cek apakah tombol submit pada modal sudah ditekan
+if (isset($_POST['submit_transaction'])) {
+    // Tambahkan transaksi dan dapatkan ID transaksi
+    $tid = add_transaction($_POST);
+
+    if ($tid) {
+        echo "<script>
+        alert('Transaksi berhasil!');
+        window.location.href = 'index.php?page=nota&tid=$tid';
+        </script>";
+    } else {
+        echo "<script>
+        alert('Gagal melakukan transaksi! ID: $tid');
+        </script>";
+    }
+}
+
 ?>
 <link rel="stylesheet" href="css/transaksi.css">
 <br>
@@ -27,13 +46,13 @@ $respay = $conn->query($qpay);
         </div>
         <!-- Form Transaksi -->
         <div class="g-col-3 g-col-lg-2">
-            <form id="transaksiForm" action="">
+            <form id="transaksiForm" action="" method="POST">
                 <!-- Id Game -->
                 <div class="mb-4 bgform">
                     <span class="rounded-circle"><b>1</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Masukkan Game ID</span>
                     <div class="mb-3 form-floating">
-                        <input type="text" id="gameIdInput" class="form-control" placeholder="Riot ID" required />
+                        <input type="text" id="floatingInput" name="game_id" class="form-control" placeholder="Riot ID" required />
                         <label for="floatingInput">ID Game</label>
                     </div>
                 </div>
@@ -47,7 +66,7 @@ $respay = $conn->query($qpay);
                             <?php while ($row = $result->fetch_assoc()) : ?>
                                 <div class="col">
                                     <div class="form-check">
-                                        <input class="btn-check" type="radio" id="<?= $i; ?>" name="item" data-price="<?= $row['price']; ?>" required />
+                                        <input class="btn-check" type="radio" id="<?= $i; ?>" name="item" value="<?= $row['itemid']; ?>" data-price="<?= $row['price']; ?>" required />
                                         <label class="selected" for="<?= $i; ?>">
                                             <img src="<?= $row['icon']; ?>" alt="" class="mx-auto my-2" style="max-height: 50px;"><br>
                                             <b><?= $row['item'] ?></b>
@@ -72,7 +91,7 @@ $respay = $conn->query($qpay);
                             <?php while ($row = $respay->fetch_assoc()) : ?>
                                 <div class="col">
                                     <div class="">
-                                        <input class="" type="radio" id="pay<?= $j; ?>" name="payment" required />
+                                        <input class="" type="radio" id="pay<?= $j; ?>" name="payment" data-pid="<?= $row['pid']; ?>" required />
                                         <label class="payment" for="pay<?= $j; ?>">
                                             <img src="<?= $row['logo'] ?>" alt="" class="Rgambar p-2">
                                             <b><?= $row['method'] ?></b>
@@ -85,7 +104,6 @@ $respay = $conn->query($qpay);
                         <?php else : ?>
                             <p>Metode Pembayaran Belum Tersedia</p>
                         <?php endif; ?>
-
                     </div>
                 </div>
                 <!-- whatsapp -->
@@ -93,18 +111,21 @@ $respay = $conn->query($qpay);
                     <span class="rounded-circle"><b>4</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Konfirmasi No Whatsapp</span>
                     <div class="mb-3 form-floating">
-                        <input type="text" id="waInput" class="form-control" placeholder="Masukkan No. Wa" required />
-                        <label for="floatingInput">Masukkan No. Wa</label>
+                        <input type="number" id="floatingInputWa" name="wa_number" class="form-control" placeholder="Masukkan No. Wa" required />
+                        <label for="floatingInputWa">Masukkan No. Wa</label>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary btn-md mr-2" id="confirmButton">
+                        <button type="button" id="confirmButton" class="btn btn-primary btn-md mr-2">
                             <i class="bi bi-plus-lg"></i> Konfirmasi
                         </button>
-
                     </div>
                 </div>
+                <!-- Hidden inputs -->
+                <input type="hidden" name="gid" value="<?= $gid; ?>" />
+                <input type="hidden" id="itemid" name="itemid" value="" />
+                <input type="hidden" id="pid" name="pid" value="" />
+                <input type="hidden" name="submit_transaction" value="1" />
             </form>
-
             <!-- Modal -->
             <div class="modal fade" id="myModal1" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -113,39 +134,37 @@ $respay = $conn->query($qpay);
                             <h5 class="modal-title"><i class="fa-solid fa-cart-shopping"></i> Detail Pembelian</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="" method="POST">
-                            <div class="modal-body">
-                                <table class="table table-striped bordered">
-                                    <tr>
-                                        <td>ID Game</td>
-                                        <td id="modalGameId"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kategori Layanan</td>
-                                        <td id="modalItem"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nominal Layanan</td>
-                                        <td id="modalPrice"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Metode Pembayaran</td>
-                                        <td id="modalPaymentMethod"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nomor WA</td>
-                                        <td id="modalWa"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Pastikan data yang anda masukkan sudah benar. Kesalahan input bukan merupakan tanggung jawab kami</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="confirm"><i class="bi bi-plus-lg"></i><a href="index.php?page=nota" style="text-decoration:none; color:white;"> Konfirmasi</a></button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </form>
+                        <div class="modal-body">
+                            <table class="table table-striped bordered">
+                                <tr>
+                                    <td>ID Game</td>
+                                    <td id="modalGameId">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Kategori Layanan</td>
+                                    <td id="modalItem">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Nominal Layanan</td>
+                                    <td id="modalPrice">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Metode Pembayaran</td>
+                                    <td id="modalPaymentMethod">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Nomor WA</td>
+                                    <td id="modalWa">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Pastikan data yang anda masukkan sudah benar. Kesalahan input bukan merupakan tanggung jawab kami</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modalConfirmButton"><i class="bi bi-plus-lg"></i> Konfirmasi</button>
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -153,77 +172,16 @@ $respay = $conn->query($qpay);
     </div>
 </div>
 <script>
-    // Fungsi untuk mengubah price dalam metode pembayaran
     document.addEventListener('DOMContentLoaded', function() {
-        // Mendapatkan semua input radio untuk item
-        const itemInputs = document.querySelectorAll('input[name="item"]');
-        const paymentPriceElements = document.querySelectorAll('.payment-price');
-
-        itemInputs.forEach(input => {
-            input.addEventListener('click', function() {
-                // Mendapatkan harga dari data attribute
-                const price = this.getAttribute('data-price');
-                const formattedPrice = 'Rp.' + Number(price).toLocaleString('id-ID', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
-
-                // Mengubah teks di semua elemen payment-price
-                paymentPriceElements.forEach(element => {
-                    element.textContent = formattedPrice;
-                });
-            });
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mendapatkan elemen-elemen yang dibutuhkan
         const form = document.getElementById('transaksiForm');
         const confirmButton = document.getElementById('confirmButton');
+        const modalConfirmButton = document.getElementById('modalConfirmButton');
+        let modalConfirmed = false;
 
         // Fungsi untuk mengecek validasi form
         function validateForm() {
-            // Mengecek apakah semua input telah diisi
-            const gameIdInput = document.getElementById('gameIdInput');
-            const waInput = document.getElementById('waInput');
-            const itemInputs = document.querySelectorAll('input[name="item"]:checked');
-            const paymentInputs = document.querySelectorAll('input[name="payment"]:checked');
-
-            if (gameIdInput.value.trim() === '' || waInput.value.trim() === '' || itemInputs.length === 0 || paymentInputs.length === 0) {
-                return false;
-            }
-            return true;
-        }
-
-        // Menambahkan event listener pada tombol konfirmasi
-        confirmButton.addEventListener('click', function(event) {
-            // Validasi form
-            if (validateForm()) {
-                // Jika valid, tampilkan modal konfirmasi
-                const modal = new bootstrap.Modal(document.getElementById('myModal1'));
-                modal.show();
-            } else {
-                // Jika tidak valid, tampilkan pesan error atau highlight input yang belum diisi
-                alert('Silakan isi semua field terlebih dahulu.');
-            }
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mendapatkan elemen-elemen yang dibutuhkan
-        const form = document.getElementById('transaksiForm');
-        const confirmButton = document.getElementById('confirmButton');
-        const modalGameId = document.getElementById('modalGameId');
-        const modalItem = document.getElementById('modalItem');
-        const modalPrice = document.getElementById('modalPrice');
-        const modalPaymentMethod = document.getElementById('modalPaymentMethod');
-        const modalWa = document.getElementById('modalWa');
-
-        // Fungsi untuk mengecek validasi form
-        function validateForm() {
-            // Mengecek apakah semua input telah diisi
-            const gameIdInput = document.getElementById('gameIdInput');
-            const waInput = document.getElementById('waInput');
+            const gameIdInput = document.getElementById('floatingInput');
+            const waInput = document.getElementById('floatingInputWa');
             const itemInputs = document.querySelectorAll('input[name="item"]:checked');
             const paymentInputs = document.querySelectorAll('input[name="payment"]:checked');
 
@@ -235,41 +193,57 @@ $respay = $conn->query($qpay);
 
         // Fungsi untuk mengisi data ke dalam modal
         function fillModal() {
-            const gameIdInput = document.getElementById('gameIdInput').value.trim();
-            const waInput = document.getElementById('waInput').value.trim();
+            const gameIdInput = document.getElementById('floatingInput').value.trim();
+            const waInput = document.getElementById('floatingInputWa').value.trim();
             const selectedItem = document.querySelector('input[name="item"]:checked');
             const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
-            // Mendapatkan harga dan item dari data attribute
-            const price = selectedItem.getAttribute('data-price');
             const itemLabel = selectedItem.nextElementSibling.querySelector('b').textContent;
             const paymentMethodLabel = selectedPayment.nextElementSibling.querySelector('b').textContent;
-
-            // Memformat harga
+            const price = selectedItem.getAttribute('data-price');
             const formattedPrice = 'Rp.' + Number(price).toLocaleString('id-ID', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
 
-            // Mengisi data ke dalam modal
-            modalGameId.textContent = gameIdInput;
-            modalItem.textContent = itemLabel;
-            modalPrice.textContent = formattedPrice;
-            modalPaymentMethod.textContent = paymentMethodLabel;
-            modalWa.textContent = waInput;
+            document.getElementById('modalGameId').textContent = gameIdInput;
+            document.getElementById('modalItem').textContent = itemLabel;
+            document.getElementById('modalPrice').textContent = formattedPrice;
+            document.getElementById('modalPaymentMethod').textContent = paymentMethodLabel;
+            document.getElementById('modalWa').textContent = waInput;
+
+            document.getElementById('itemid').value = selectedItem.value;
+            document.getElementById('pid').value = selectedPayment.getAttribute('data-pid');
         }
 
-        // Menambahkan event listener pada tombol konfirmasi
+        // Event listener untuk button konfirmasi yang membuka modal
         confirmButton.addEventListener('click', function(event) {
-            // Validasi form
             if (validateForm()) {
-                // Jika valid, isi data ke dalam modal dan tampilkan modal konfirmasi
                 fillModal();
                 const modal = new bootstrap.Modal(document.getElementById('myModal1'));
                 modal.show();
             } else {
-                // Jika tidak valid, tampilkan pesan error atau highlight input yang belum diisi
                 alert('Silakan isi semua field terlebih dahulu.');
+            }
+        });
+
+        // Event listener untuk button konfirmasi di dalam modal
+        modalConfirmButton.addEventListener('click', function(event) {
+            modalConfirmed = true;
+            form.submit();
+        });
+
+        // Event listener untuk tombol cancel dan close di dalam modal
+        document.querySelectorAll('.btn-close, .btn-default').forEach(button => {
+            button.addEventListener('click', function() {
+                modalConfirmed = false;
+            });
+        });
+
+        // Submit form hanya jika modal telah dikonfirmasi
+        form.addEventListener('submit', function(event) {
+            if (!modalConfirmed) {
+                event.preventDefault();
             }
         });
     });
