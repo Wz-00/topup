@@ -1,34 +1,41 @@
-.container {
-    padding: 20px 0;
+.containbg {
+    background-color: #27292a;
+    border-radius: 30px;
+}
+
+.ginfo {
+    background-color: #1f2122;
+    border-radius: 30px;
 }
 
 .ginfo img{
+    
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
 
-.rounded-circle {
+.number {
     display: inline-block;
     position: relative;
     width: 35px;
     height: 35px;
     color: white;
     text-align: center;
-    background-color: #363062;
+    background-color: #27292a;
     top: -42px;
-    border: solid 3px white;
+    border: solid 3px #1f2122;
     padding-top: 4px;
 }
 
 .bgform {
-    background-color: white;
-    border-radius: 15px;
+    background-color: #1f2122;
+    border-radius: 30px;
     padding: 20px;
     margin-bottom: 10px;
+    color: white;
 }
 
 label {
-    border: black solid 1px;
     border-radius: 2vh;
     padding: 0 40px;
     cursor: pointer;
@@ -43,8 +50,23 @@ label {
     text-align: center;
 }
 
+.selected, .payment {
+    background-color: #27292a;
+}
+
 input[type="text"] {
     border: solid 2px #d8d8d8;
+}
+
+.tombol{
+    display: inline-block;
+    position: relative;
+    bottom: -34px;
+    background-color: #e75e8d;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 15px;
+    color: white;
 }
 
 input[type="radio"]{
@@ -54,7 +76,8 @@ input[type="radio"]{
     width: 100%;
     border-radius: 10px;
     cursor: pointer;
-    border: 3px solid transparent;
+    border: none;
+    background-color: #27292a;
     outline: none;
     box-shadow: 15px 15px 25px rgba(2,28,53,0.05);
 }
@@ -72,10 +95,10 @@ input[type="radio"]:after {
 input[type="radio"]:checked:after{
     font-weight: 900;
     content: "\f058";
-    color: #478bfb;
+    color: #e2e6f3;
 }
 input[type="radio"]:checked+label{
-    background-color: #e8e9eb;
+    background-color: #e75e8d;
     border-radius: 2vh;
 }
 .Rgambar {

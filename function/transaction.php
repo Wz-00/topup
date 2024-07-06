@@ -34,12 +34,12 @@ function add_transaction($data) {
     }
 
     // Ambil ID transaksi yang baru saja dimasukkan
-    $query_tid = "SELECT `tid` FROM `transaction` WHERE `pid` = ? AND `gid` = ? AND `itemid` = ? AND `wa number` = ? AND `status` = ? AND `IDGame` = ? AND `created_at` = ? ORDER BY `tid` DESC LIMIT 1";
     if ($uid) {
-        $query_tid = "SELECT `tid` FROM `transaction` WHERE `uid` = ? AND " . substr($query_tid, 26);
+        $query_tid = "SELECT `tid` FROM `transaction` WHERE `uid` = ? AND `pid` = ? AND `gid` = ? AND `itemid` = ? AND `wa number` = ? AND `status` = ? AND `IDGame` = ? AND `created_at` = ? ORDER BY `tid` DESC LIMIT 1";
         $stmt_tid = $conn->prepare($query_tid);
         $stmt_tid->bind_param('ssssssss', $uid, $pid, $gid, $itemid, $wa, $status, $gameid, $waktu);
     } else {
+        $query_tid = "SELECT `tid` FROM `transaction` WHERE `pid` = ? AND `gid` = ? AND `itemid` = ? AND `wa number` = ? AND `status` = ? AND `IDGame` = ? AND `created_at` = ? ORDER BY `tid` DESC LIMIT 1";
         $stmt_tid = $conn->prepare($query_tid);
         $stmt_tid->bind_param('sssssss', $pid, $gid, $itemid, $wa, $status, $gameid, $waktu);
     }
@@ -52,5 +52,22 @@ function add_transaction($data) {
     } else {
         return false;
     }
+}
+function UpdateTransaksi($tid, $current_status){
+    global $conn;
+    // Tentukan status baru berdasarkan status saat ini
+    if ($current_status == 'Menunggu Pembayaran') {
+        $new_status = 'Prosess';
+    } elseif ($current_status == 'Prosess') {
+        $new_status = 'Berhasil';
+    } else {
+        return false; // Jika status tidak valid
+    }
+
+    // Update status di database
+    $update_query = "UPDATE transaction SET status='$new_status' WHERE tid='$tid'";
+    mysqli_query($conn, $update_query);
+
+    return mysqli_affected_rows($conn);
 }
 ?>

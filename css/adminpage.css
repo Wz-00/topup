@@ -1,7 +1,36 @@
+body {
+  background-color: #1f2122;
+}
+.container {
+  background-color: #27292a;
+  border-radius: 30px;
+}
+
+.card {
+  background-color: #1f2122;
+  color: white;
+}
+
+.tombol {
+  display: flex;
+    position: relative;
+    top: -40px;
+    margin: 0 auto;
+    background-color: #e75e8d;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 15px;
+    color: white;
+}
+
 .modal-body input {
   border-radius: 5px;
   width: 100%;
   
+}
+
+.active::selection {
+  color: #e75e8d;
 }
 
 textarea {

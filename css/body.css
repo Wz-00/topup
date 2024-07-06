@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    top: 0;
+    bottom: 0;
+}
+.card {
+    background-color: #27292a;
+}
+
+.card img {
+    border-radius: 10px;
+}
+
+.card a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.active::before {
+    color: #e75e8d;
+}
+
+.containbg {
+    background-color: #27292a;
+    border-radius: 30px;
+}
+.game {
+    background-color: #1f2122;
+    border-radius: 30px;
+}
+.carousel-item img {
+    border-radius: 30px;
+}

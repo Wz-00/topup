@@ -1,0 +1,35 @@
+body {
+    background-color: #1f2122;
+}
+.kartu {
+    border-radius: 10px;
+    background-color: #27292a;
+    color: white;
+}
+img.GameBanner {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.kiri, .item, .canva {
+    background-color: #1f2122;
+    border-radius: 15px;
+}
+.kard {
+    border-radius: 10px;
+    padding-right: 10px;
+    background-color: #27292a;
+    color: white;
+}
+.edit button {
+    display: flex;
+    position: relative;    
+    top: -32px;
+    margin: 0 auto;
+    z-index: 99;
+    background-color: #e75e8d;
+    padding: 5px 20px;
+    color: white;
+    border: none;
+    border-radius: 22px;
+    
+}

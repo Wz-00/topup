@@ -2,9 +2,16 @@ h3 {
     color: white;
     text-align: center;
 }
+
+.containbg {
+    background-color: #27292a;
+    border-radius: 30px;
+}
+
 .nota {
-    background-color: white;
+    background-color: #1f2122;
     padding: 20px;
     margin: 10px;
     border-radius: 12px;
+    color: white;
 }

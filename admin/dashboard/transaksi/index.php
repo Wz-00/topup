@@ -34,14 +34,16 @@ if (isset($_POST['submit_transaction'])) {
 ?>
 <link rel="stylesheet" href="css/transaksi.css">
 <br>
-<div class="container">
+<div class="container containbg my-2 p-4">
     <div class="grid" style="--bs-columns: 3;">
         <!-- Info Game -->
-        <div class="g-col-3 g-col-lg-1 ginfo">
-            <img src="<?= $rowgame['image'] ?>" alt="" class="img-fluid">
-            <div class="p-2">
-                <h4 class="text-white"><?= $rowgame['game'] ?></h4>
-                <p class="text-white"><?= $rowgame['description'] ?></p>
+        <div class="g-col-3 g-col-lg-1">
+            <div class="ginfo p-3">
+                <img src="<?= $rowgame['image'] ?>" alt="" class="img-fluid">
+                <div class="p-2">
+                    <h4 class="text-white"><?= $rowgame['game'] ?></h4>
+                    <p class="text-white"><?= $rowgame['description'] ?></p>
+                </div>
             </div>
         </div>
         <!-- Form Transaksi -->
@@ -49,16 +51,16 @@ if (isset($_POST['submit_transaction'])) {
             <form id="transaksiForm" action="" method="POST">
                 <!-- Id Game -->
                 <div class="mb-4 bgform">
-                    <span class="rounded-circle"><b>1</b></span>
+                    <span class="rounded-circle number"><b>1</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Masukkan Game ID</span>
                     <div class="mb-3 form-floating">
                         <input type="text" id="floatingInput" name="game_id" class="form-control" placeholder="Riot ID" required />
-                        <label for="floatingInput">ID Game</label>
+                        <label for="floatingInput" class="text-black">ID Game</label>
                     </div>
                 </div>
                 <!-- Item -->
                 <div class="mb-4 bgform">
-                    <span class="rounded-circle"><b>2</b></span>
+                    <span class="rounded-circle number"><b>2</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Pilih Item</span>
                     <div class="row row-cols-sm-2 row-cols-md-3 gy-3">
                         <?php if ($result->num_rows > 0) : ?>
@@ -83,7 +85,7 @@ if (isset($_POST['submit_transaction'])) {
                 </div>
                 <!-- Payment -->
                 <div class="mb-4 bgform">
-                    <span class="rounded-circle"><b>3</b></span>
+                    <span class="rounded-circle number"><b>3</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Pilih Metode Pembayaran</span>
                     <div class="row row-cols-1">
                         <?php if ($respay) : ?>
@@ -108,14 +110,14 @@ if (isset($_POST['submit_transaction'])) {
                 </div>
                 <!-- whatsapp -->
                 <div class="mb-4 bgform">
-                    <span class="rounded-circle"><b>4</b></span>
+                    <span class="rounded-circle number"><b>4</b></span>
                     <span style="font-size: 25px; font-weight: bold;">Konfirmasi No Whatsapp</span>
                     <div class="mb-3 form-floating">
                         <input type="number" id="floatingInputWa" name="wa_number" class="form-control" placeholder="Masukkan No. Wa" required />
-                        <label for="floatingInputWa">Masukkan No. Wa</label>
+                        <label for="floatingInputWa" class="text-black">Masukkan No. Wa</label>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" id="confirmButton" class="btn btn-primary btn-md mr-2">
+                        <button type="button" id="confirmButton" class="tombol">
                             <i class="bi bi-plus-lg"></i> Konfirmasi
                         </button>
                     </div>

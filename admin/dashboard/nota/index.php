@@ -2,7 +2,7 @@
 require 'function/conn.php';
 ?>
 <link rel="stylesheet" href="css/nota.css">
-<div class="container py-5">
+<div class="container py-5 containbg my-3">
     <h3><b>Detail Pembayaran</b></h3>
     <div class="nota greetings">
         <b>Terima Kasih</b>

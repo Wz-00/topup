@@ -14,12 +14,14 @@ if (isset($_SESSION['role'])) {
     <title>Menosa Store</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <style>
         .mySlides {
             display: none;
@@ -39,7 +41,7 @@ if (isset($_SESSION['role'])) {
         }
 
         body {
-            background-color: #363062;
+            background-color: #1f2122;
         }
 
         .row {
@@ -101,23 +103,24 @@ if (isset($_SESSION['role'])) {
 
 <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary bg-light">
+    <nav class="navbar navbar-expand-lg">
 
-        <a href='index.php' class='navbar-brand'>
-            <img src="asset/icon/footer/logo.jpg" class="navbar-logo" alt="logo">
+        <a href='index.php' class='navbar-brand text-light'>
+            <img src="asset/icon/footer/logo.jpg" class="navbar-logo rounded-circle" alt="logo">
             <b>MenosaStore</b>
         </a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
-            <li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+            <li class="nav-item "><a href="index.php" class="nav-link recolor" id="link1">Home</a></li>
             <?php if ($role != 'admin') : ?>
-                <li class='nav-item'><a href="" class="nav-link">Cek Pesanan</a></li>
+                <li class='nav-item'><a href="" class="nav-link recolor" id="link1">Cek Pesanan</a></li>
             <?php else : ?>
-                <li class='nav-item'><a href="index.php?page=revenue" class="nav-link">Revenue</a></li>
+                <li class='nav-item'><a href="index.php?page=revenue" class="nav-link recolor" id="link1">Revenue</a></li>
+                <li class='nav-item'><a href="index.php?page=transaksi" class="nav-link recolor" id="link1">Transaksi</a></li>
             <?php endif; ?>
         </ul>
         <?php if (isset($_SESSION['username'])) { ?>
             <div class="profile-dropdown">
-                <div onclick="toggle()" class="profile-dropdown-btn">
+                <div onclick="toggle()" class="profile-dropdown-btn text-light">
                     <span>
                         <?php
                         if (isset($_SESSION['username'])) {
@@ -137,11 +140,26 @@ if (isset($_SESSION['role'])) {
                         </a>
                     </li>
 
-                    <li class="profile-dropdown-list-item open-modal-btn" id="openModalBtn">
+                    <li class="profile-dropdown-list-item">
                         <a href="#">
                             <i class="fa-regular fa-bell"></i>
                             Notification
                         </a>
+
+                        <ul class="dropdown-menu dropdown-submenu dropdown-submenu-left">
+                            <li>
+                                <a class="dropdown-item" href="#">Submenu item 1</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Submenu item 2</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Submenu item 4</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Submenu item 5</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="profile-dropdown-list-item">
