@@ -60,7 +60,7 @@ require 'function/conn.php';
                             <b>No. Rekening/ No. Virtual Account</b>
                             <p><?= $row['number']; ?></p>
                             <b>Jumlah Pembayaran</b>
-                            <p><?= $row['price']; ?></p>
+                            <p><?= 'Rp.' . number_format($row['price'], 2, ",", "."); ?></p>
                             <b>Keterangan/ No. Token/ No. Voucher</b>
                             <p><?= $row['status']; ?></p>
                         </div>

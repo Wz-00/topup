@@ -112,7 +112,7 @@ if (isset($_SESSION['role'])) {
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
             <li class="nav-item "><a href="index.php" class="nav-link recolor" id="link1">Home</a></li>
             <?php if ($role != 'admin') : ?>
-                <li class='nav-item'><a href="" class="nav-link recolor" id="link1">Cek Pesanan</a></li>
+                <li class='nav-item'><a href="index.php?page=search" class="nav-link recolor" id="link1">Cek Pesanan</a></li>
             <?php else : ?>
                 <li class='nav-item'><a href="index.php?page=revenue" class="nav-link recolor" id="link1">Revenue</a></li>
                 <li class='nav-item'><a href="index.php?page=transaksi" class="nav-link recolor" id="link1">Transaksi</a></li>

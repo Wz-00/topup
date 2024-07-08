@@ -28,8 +28,33 @@ img.GameBanner {
     z-index: 99;
     background-color: #e75e8d;
     padding: 5px 20px;
-    color: white;
     border: none;
-    border-radius: 22px;
+    border-radius: 22px;    
+}
+
+.edit button a {
+    color: white;
+    text-decoration: none;
     
+}
+
+.change {
+    display: flex;
+    position: relative;   
+    margin: 0 auto;
+    background-color: #e75e8d;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 22px;  
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea {
+    height: 315px;
+    resize: none;
 }

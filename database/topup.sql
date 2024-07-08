@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2024 at 04:33 PM
+-- Generation Time: Jul 08, 2024 at 06:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,52 @@ SET time_zone = "+00:00";
 --
 -- Database: `topup`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_and_update_expired_transactions` ()   BEGIN
+    UPDATE `transaction`
+    SET `status` = 'gagal'
+    WHERE `status` = 'menunggu pembayaran'
+      AND `created_at` < NOW() - INTERVAL 24 HOUR;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banner`
+--
+
+CREATE TABLE `banner` (
+  `bid` char(4) NOT NULL,
+  `banner` varchar(50) NOT NULL,
+  `gid` char(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `banner`
+--
+
+INSERT INTO `banner` (`bid`, `banner`, `gid`) VALUES
+('B001', 'asset/banner/promo5.jpg', 'G001'),
+('B002', 'asset/banner/promo6.jpg', 'G002'),
+('B003', 'asset/banner/promo7.jpg', 'G004');
+
+--
+-- Triggers `banner`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_before_insert_banner` BEFORE INSERT ON `banner` FOR EACH ROW BEGIN
+  DECLARE max_id INT(3);
+  SET max_id = (SELECT MAX(CAST(SUBSTRING(`bid`, 2) AS UNSIGNED)) FROM `banner`);
+  SET NEW.`bid` = CONCAT('B', LPAD(COALESCE(max_id + 1, 1), 3, '0'));
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -39,8 +85,8 @@ CREATE TABLE `game` (
 --
 
 INSERT INTO `game` (`gid`, `game`, `description`, `image`) VALUES
-('G001', 'Valorant', 'Cara Top Up <br>\r\n1. Masukkan Riot ID Anda, Contoh : Lapakgaming#1234 <br>\r\n2. Pilih Nominal Points yang kamu inginkan <br>\r\n3. Selesaikan pembayaran <br>\r\n4. Points akan ditambahkan ke akun Valorant kamu\r\n5. Pastikan untuk top up dari pukul 08:00 WIB - 23:00 WIB. Memesan diluar jam proses merupakan tanggung jawab pembeli dan transaksi tidak dapat direfund', 'uploads/val-bg.jpg'),
-('G002', 'Mobile Legends', 'Cara Top Up <br>\r\n1. Masukkan User ID dan Zone ID Anda, Contoh : 1234567 (1234) <br>\r\n2. Pilih Nominal Diamonds yang kamu inginkan\r\n3. Selesaikan pembayaran <br>\r\n4. Diamonds akan ditambahkan ke akun Mobile Legends kamu <br>', 'uploads/ml-bg.jpg'),
+('G001', 'Valorant', 'Cara Top Up <br>\r\n1. Masukkan Riot ID Anda, Contoh : Lapakgaming#1234 <br>\r\n2. Pilih Nominal Points yang kamu inginkan <br>\r\n3. Selesaikan pembayaran <br>\r\n4. Points akan ditambahkan ke akun Valorant kamu\r\n5. Pastikan untuk top up dari pukul 08:00 WIB - 23:00 WIB. Memesan diluar jam proses merupakan tanggung jawab pembeli dan transaksi tidak dapat direfund ', 'asset/game/valorant1.jpg'),
+('G002', 'Mobile Legends', 'Cara Top Up<br>\r\n\r\n1. Masukkan User ID dan Zone ID Anda, Contoh : 1234567 (1234) <br>\r\n2. Pilih Nominal Diamonds yang kamu inginkan<br>\r\n3. Selesaikan pembayaran <br>\r\n4. Diamonds akan ditambahkan ke akun Mobile Legends kamu <br>', 'asset/game/ml-bg.jpg'),
 ('G003', 'PUBG Mobile', 'Cara Top Up <br>\r\n1. Masukkan ID anda <br>\r\n2. Pilih produk yang anda inginkan. <br>\r\n3. Selesaikan Pembayaran <br>\r\n4. Produk akan ditambahkan pada akun anda. ', 'uploads/pubg-bg.jpg'),
 ('G004', 'Genshin Impact', 'Cara Top Up <br>\r\n1. Masukkan User ID dan Pilih Server Anda <br>\r\n2. Pilih Nominal Crystals yang kamu inginkan <br>\r\n3. Selesaikan pembayaran <br>\r\n4. Crystals akan ditambahkan ke akun Genshin Impact kamu', 'uploads/genshin-bg.jpg'),
 ('G005', 'COD Mobile', 'Cara Top Up <br>\r\n1. Masukkan Open ID Anda <br>\r\n2. Pilih produk yang kamu inginkan <br>\r\n3. Selesaikan pembayaran <br>\r\n4. Produk akan ditambahkan ke akun CODM kamu', 'uploads/codm-bg.jpg'),
@@ -85,7 +131,7 @@ INSERT INTO `item` (`itemid`, `gid`, `item`, `price`, `icon`) VALUES
 ('I002', 'G001', '650 VP', 68000, 'asset/icon/vp-icon.png'),
 ('I003', 'G001', '1350 VP', 135000, 'asset/icon/vp-icon.png'),
 ('I004', 'G001', '2100 VP', 198000, 'asset/icon/vp-icon.png'),
-('I005', 'G001', '3600 VP', 324000, 'asset/icon/vp-icon.png'),
+('I005', 'G001', '3600 VP', 324500, 'asset/icon/vp-icon.png'),
 ('I006', 'G001', '7500 VP', 666000, 'asset/icon/vp-icon.png'),
 ('I007', 'G002', '170 Diamonds', 43700, 'asset/icon/MLBB_Diamonds.png'),
 ('I008', 'G002', '240 Diamonds', 62000, 'asset/icon/MLBB_Diamonds.png'),
@@ -136,7 +182,8 @@ INSERT INTO `item` (`itemid`, `gid`, `item`, `price`, `icon`) VALUES
 ('I053', 'G010', '330 Oneiric Shard', 71000, 'asset/icon/hsr_shard.png'),
 ('I054', 'G010', '1090 Oneiric Shard', 224000, 'asset/icon/hsr_shard.png'),
 ('I055', 'G010', '2240 Oneiric Shard', 431000, 'asset/icon/hsr_shard.png'),
-('I056', 'G010', '3880 Oneiric Shard', 719000, 'asset/icon/hsr_shard.png');
+('I056', 'G010', '3880 Oneiric Shard', 719000, 'asset/icon/hsr_shard.png'),
+('I057', 'G001', '8150 VP', 772000, 'asset/icon/vp-icon.png');
 
 --
 -- Triggers `item`
@@ -200,6 +247,7 @@ CREATE TABLE `transaction` (
   `gid` char(4) NOT NULL,
   `itemid` char(4) NOT NULL,
   `wa number` bigint(16) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
   `status` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -207,13 +255,33 @@ CREATE TABLE `transaction` (
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`tid`, `uid`, `IDGame`, `pid`, `gid`, `itemid`, `wa number`, `status`) VALUES
-('T001', 'U006', 'UncleOmen1#Omen', 'P001', 'G001', 'I005', 2147483647, 'Menunggu Pembayaran'),
-('T002', 'U006', 'fivesecond#dawg', 'P004', 'G001', 'I005', 85163057189, 'Menunggu Pembayaran');
+INSERT INTO `transaction` (`tid`, `uid`, `IDGame`, `pid`, `gid`, `itemid`, `wa number`, `created_at`, `status`) VALUES
+('T001', 'U002', 'asdf', 'P001', 'G001', 'I001', 1234, '2024-07-01 20:19:13', 'Berhasil'),
+('T002', 'U002', 'UncleOmen1#Omen', 'P001', 'G001', 'I002', 54321, '2024-07-01 20:20:07', 'Berhasil'),
+('T003', 'U007', 'asdf', 'P001', 'G002', 'I007', 23432, '0000-00-00 00:00:00', 'Gagal'),
+('T004', 'U007', 'talallalaala', 'P002', 'G002', 'I007', 1111, '2024-07-02 23:42:01', 'Berhasil'),
+('T005', 'U007', 'talallalaala', 'P002', 'G002', 'I007', 1111, '2024-07-02 23:46:34', 'Berhasil'),
+('T006', 'U007', 'nigga', 'P001', 'G002', 'I011', 9000, '2024-07-02 23:47:03', 'Berhasil'),
+('T007', 'U007', 'fivesecond#dawg', 'P001', 'G001', 'I004', 85163057189, '2024-07-03 00:53:49', 'Berhasil'),
+('T008', 'U007', 'mr. goodman', 'P002', 'G003', 'I013', 89980, '2024-07-03 21:12:48', 'Berhasil'),
+('T009', 'U007', 'qww', 'P002', 'G002', 'I002', NULL, '2024-07-03 16:38:42', 'Berhasil'),
+('T010', 'U008', 'zeta', 'P005', 'G001', 'I006', 3213123, '2024-07-05 14:17:59', 'gagal'),
+('T011', 'U008', 'zeta', 'P003', 'G001', 'I002', 3213123, '2024-07-05 14:25:55', 'gagal'),
+('T012', 'U008', '1234', 'P003', 'G002', 'I007', 3232, '2024-07-05 14:26:07', 'Berhasil'),
+('T013', 'U008', 'asdf', 'P003', 'G002', 'I010', 321, '2024-07-05 14:35:08', 'Berhasil'),
+('T014', 'U007', 'rawr', 'P001', 'G004', 'I017', 111222, '2024-07-08 21:33:08', 'Menunggu Pembayaran');
 
 --
 -- Triggers `transaction`
 --
+DELIMITER $$
+CREATE TRIGGER `guest` BEFORE INSERT ON `transaction` FOR EACH ROW BEGIN
+    IF NEW.uid IS NULL OR NEW.uid = '' THEN
+        SET NEW.uid = 'U007';
+    END IF;
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `trg_before_insert_transaction` BEFORE INSERT ON `transaction` FOR EACH ROW BEGIN
   DECLARE max_id INT(3);
@@ -247,7 +315,9 @@ INSERT INTO `user` (`uid`, `username`, `email`, `password`, `role`) VALUES
 ('U003', 'John Doe', 'Johndoe@example.com', '$2y$10$IUJL9t0yxyOhGFeIs6.dCOOA5', 'user'),
 ('U004', 'wizz', 'wizz@wizz.co.id', '$2y$10$bwo2yg.Am5GRNTgkNNJvb.ZQh', 'user'),
 ('U005', 'admin2', 'admin21@admin.co.id', 'c84258e9c39059a89ab77d846ddab909', 'admin'),
-('U006', 'johncina', 'johncina@wkwk', '576a0ae80b5931ccd0b85fcad33f9b5b', 'user');
+('U006', 'johncina', 'johncina@wkwk', '576a0ae80b5931ccd0b85fcad33f9b5b', 'user'),
+('U007', 'guest', 'guest', '2f43b42fd833d1e77420a8dae7419000', 'user'),
+('U008', 'zeta', 'zeta@mail.com', 'e26026b73cdc3b59012c318ba26b5518', 'user');
 
 --
 -- Triggers `user`
@@ -272,6 +342,13 @@ DELIMITER ;
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `banner`
+--
+ALTER TABLE `banner`
+  ADD PRIMARY KEY (`bid`),
+  ADD KEY `gid` (`gid`);
 
 --
 -- Indexes for table `game`
@@ -313,6 +390,12 @@ ALTER TABLE `user`
 --
 
 --
+-- Constraints for table `banner`
+--
+ALTER TABLE `banner`
+  ADD CONSTRAINT `banner_ibfk_1` FOREIGN KEY (`gid`) REFERENCES `game` (`gid`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Constraints for table `item`
 --
 ALTER TABLE `item`
@@ -326,6 +409,14 @@ ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`gid`) REFERENCES `game` (`gid`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `transaction_ibfk_3` FOREIGN KEY (`itemid`) REFERENCES `item` (`itemid`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `transaction_ibfk_4` FOREIGN KEY (`pid`) REFERENCES `payment` (`pid`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `check_expired_transactions_event` ON SCHEDULE EVERY 1 HOUR STARTS '2024-07-07 19:30:57' ON COMPLETION NOT PRESERVE ENABLE DO CALL check_and_update_expired_transactions()$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

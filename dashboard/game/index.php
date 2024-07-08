@@ -66,7 +66,7 @@ $game = query("SELECT * FROM game where gid = '$gid'")[0];
                 </div>
             </div>
         </div>
-        <span class="edit"><button>Edit This Game</button></span>
+        <span class="edit"><button><a href='index.php?page=game/edit&gid=<?= $game['gid'] ?>'>Edit This Game</a></button></span>
         <div class="text-center pb-3 text-light">
             <p>Copyright © 2036 Menosa Store. All rights reserved.</p>
         </div>
