@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Script to use JavaScript for redirect
     echo '<script>
         alert("Update berhasil dilakukan.");
-        window.location.href = "index.php?page=game&gid=' .$game['gid']. '";
+        window.location.href = "index.php?page=game&gid=' . $game['gid'] . '";
     </script>';
     exit();
 }
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="kiri">
                                 <img id="preview_game" src="<?= htmlspecialchars($game['image']) ?>" alt="" class="img-fluid GameBanner">
                                 <input type="file" id="game_image" name="game_image" accept="image/*" style="display:none;" onchange="previewImage('game_image', 'preview_game')">
-                                <button type="button" id="game_image_button" class="change text-center text-light">Select Image</button>
+                                <button type="button" id="game_image_button" class="change text-center text-light" style="top: -16px;">Select Image</button>
                                 <div class="p-2">
                                     <div class="form my-3">
                                         <label for="game_name">Nama Game</label>
@@ -136,7 +136,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     ?>
                                             <div class="col item-col">
                                                 <div class="kartu p-1 my-1">
+                                                    <div class="row">
+                                                        <div class="col text-end">
+                                                            <button type="button" class="close-btn rounded-circle" onclick="hapusItem(this)">x</button>
+                                                        </div>
+                                                    </div>
                                                     <img id="preview_item_<?= htmlspecialchars($itemId) ?>" src="<?= htmlspecialchars($itemIcon) ?>" alt="" class="img-fluid mx-auto my-1" style="max-height: 50px;">
+
                                                     <input type="file" id="item_image_<?= htmlspecialchars($itemId) ?>" name="item_image[]" accept="image/*" style="display:none;" onchange="previewImage('item_image_<?= htmlspecialchars($itemId) ?>', 'preview_item_<?= htmlspecialchars($itemId) ?>')">
                                                     <button type="button" class="change text-center text-light" data-input-id="item_image_<?= htmlspecialchars($itemId) ?>">Select Icon</button>
                                                     <div class="row text-center">
@@ -151,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                             <input type="number" id="item_price_<?= htmlspecialchars($itemId) ?>" name="item_price[]" value="<?= htmlspecialchars($itemPrice) ?>" style="width: 100%;" class="form-control py-0">
                                                         </div>
                                                     </div>
-                                                    <button type="button" class="close-btn" onclick="hapusItem(this)">x</button>
+
                                                 </div>
                                                 <input type="hidden" name="item_id[]" value="<?= htmlspecialchars($itemId) ?>">
                                                 <input type="hidden" name="current_item_image[]" value="<?= htmlspecialchars($itemIcon) ?>">
@@ -178,12 +184,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script>
         // Menambahkan event listener untuk tombol select image
-        document.getElementById('game_image_button').addEventListener('click', function () {
+        document.getElementById('game_image_button').addEventListener('click', function() {
             document.getElementById('game_image').click();
         });
 
         document.querySelectorAll('.change[data-input-id]').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 document.getElementById(button.getAttribute('data-input-id')).click();
             });
         });
@@ -194,14 +200,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const file = input.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     preview.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        document.getElementById('tambahItem').addEventListener('click', function () {
+        document.getElementById('tambahItem').addEventListener('click', function() {
             const container = document.getElementById('itemContainer');
             const newItemId = Date.now();
 
@@ -210,7 +216,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             itemCol.innerHTML = `
                 <div class="kartu p-1 my-1">
-                    <img id="preview_item_${newItemId}" src="default-icon.png" alt="" class="img-fluid mx-auto my-1" style="max-height: 50px;">
+                    <div class="row">
+                        <div class="col text-end">
+                            <button type="button" class="close-btn rounded-circle" onclick="hapusItem(this)">x</button>
+                        </div>
+                    </div>  
+                    <img id="preview_item_${newItemId}" src="default-icon.png" alt="" class="img-fluid mx-auto my-1" style="max-height: 50px;">                                      
                     <input type="file" id="item_image_${newItemId}" name="item_image[]" accept="image/*" style="display:none;" onchange="previewImage('item_image_${newItemId}', 'preview_item_${newItemId}')">
                     <button type="button" class="change text-center text-light" data-input-id="item_image_${newItemId}">Select Icon</button>
                     <div class="row text-center">
@@ -225,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input type="number" id="item_price_${newItemId}" name="item_price[]" style="width: 100%;" class="form-control py-0">
                         </div>
                     </div>
-                    <button type="button" class="close-btn" onclick="hapusItem(this)">x</button>
+                    
                 </div>
                 <input type="hidden" name="item_id[]" value="">
                 <input type="hidden" name="current_item_image[]" value="default-icon.png">
@@ -233,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             container.appendChild(itemCol);
 
-            itemCol.querySelector('.change[data-input-id]').addEventListener('click', function () {
+            itemCol.querySelector('.change[data-input-id]').addEventListener('click', function() {
                 document.getElementById(this.getAttribute('data-input-id')).click();
             });
         });
@@ -241,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function hapusItem(button) {
             const itemCol = button.closest('.item-col');
             const itemIdInput = itemCol.querySelector('input[name="item_id[]"]');
-            
+
             if (itemIdInput) {
                 itemIdInput.closest('.item-col').setAttribute('data-deleted', 'true');
                 itemIdInput.name = "deleted_item_id[]"; // Mengubah nama input agar bisa diakses saat submit

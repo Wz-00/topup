@@ -6,9 +6,17 @@ function saveGame($conn, $game, $description, $image) {
     $stmt->bind_param("sss", $game, $description, $image);
 
     if ($stmt->execute()) {
-        echo "New record created successfully";
+        // Mengambil gid yang baru saja dimasukkan
+        $stmt = $conn->prepare("SELECT gid FROM game WHERE game = ? AND description = ? AND image = ? ORDER BY gid DESC LIMIT 1");
+        $stmt->bind_param("sss", $game, $description, $image);
+        $stmt->execute();
+        $stmt->bind_result($gid);
+        $stmt->fetch();
+        $stmt->close();
+        return $gid;
     } else {
-        echo "Error: " . $stmt->error;
+        error_log("Insert failed: " . $stmt->error);
+        return false;
     }
 
     $stmt->close();

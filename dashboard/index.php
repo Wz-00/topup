@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $description = $_POST['description'];
 
   // Proses upload gambar
-  $target_dir = "uploads/";
+  $target_dir = "asset/game/";
   $target_file = $target_dir . basename($_FILES["image"]["name"]);
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   $check = getimagesize($_FILES["image"]["tmp_name"]);
@@ -21,9 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $image = ""; // Atau bisa diisi dengan path default atau error handling
   }
 
-  saveGame($conn, $game, $description, $image);
+  $gid = saveGame($conn, $game, $description, $image);
+
+  if ($gid) {
+    echo "<script>
+    alert('Game berhasil ditambahkan!');
+    window.location.href = 'index.php?page=game/edit&gid=$gid';
+    </script>";
+  } else {
+    echo "<script>
+    alert('Terjadi kesalahan saat menambahkan game. GID: $gid');
+    </script>";
+    error_log("Failed to get GID after insert.");
+  }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     <?php endif; ?>
     <br>
-    
 
     <!-- modal Add game -->
     <div class="modal fade" id="addgame" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -144,7 +156,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="modal-body">
               <table class="table table-striped bordered">
                 <!-- sesuaikan dengan button yang ditekan/ ambil dari database -->
-
                 <tr>
                   <td>Game</td>
                   <td><input type="text" placeholder="Nama Game" name="game" id="game"></td>
@@ -167,10 +178,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                   </td>
                 </tr>
-
               </table>
             </div>
-
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add</button>
               <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -180,14 +189,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
 
-    
   </div>
   <button type="button" class="tombol" data-bs-toggle="modal" data-bs-target="#addgame">
-      <i class="fa-solid fa-plus"></i> Add more game
-    </button>
-    <div class="text-center pb-3 text-light">
-      <p>Copyright © 2036 Menosa Store. All rights reserved.</p>
-    </div>
+    <i class="fa-solid fa-plus"></i> Add more game
+  </button>
+  <div class="text-center pb-3 text-light">
+    <p>Copyright © 2036 Menosa Store. All rights reserved.</p>
+  </div>
   <script src="js/modal.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

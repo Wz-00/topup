@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2024 at 06:27 PM
+-- Generation Time: Jul 09, 2024 at 09:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -183,7 +183,8 @@ INSERT INTO `item` (`itemid`, `gid`, `item`, `price`, `icon`) VALUES
 ('I054', 'G010', '1090 Oneiric Shard', 224000, 'asset/icon/hsr_shard.png'),
 ('I055', 'G010', '2240 Oneiric Shard', 431000, 'asset/icon/hsr_shard.png'),
 ('I056', 'G010', '3880 Oneiric Shard', 719000, 'asset/icon/hsr_shard.png'),
-('I057', 'G001', '8150 VP', 772000, 'asset/icon/vp-icon.png');
+('I057', 'G001', '8150 VP', 772000, 'asset/icon/vp-icon.png'),
+('I058', 'G001', '9250 VP', 900000, 'asset/icon/vp-icon.png');
 
 --
 -- Triggers `item`
