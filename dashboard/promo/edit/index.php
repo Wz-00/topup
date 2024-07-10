@@ -30,11 +30,13 @@ if (isset($_POST["submit"])) {
             </div>
             <div class="row mt-2">
                 <div class="col">
+                    <?php
+                    $querygame = "SELECT * FROM game";
+                    $resultgame = mysqli_query($conn, $querygame);
+                    ?>
                     <select name="game" id="game" class="form-control" data-bid="<?= $rowbanner['gid']; ?>">
                         <option value="" selected disabled>Pilih Game</option>
-                        <?php
-                        $querygame = "SELECT game FROM game";
-                        $resultgame = mysqli_query($conn, $querygame);
+                        <?php                        
                         while ($rowgame = mysqli_fetch_assoc($resultgame)) {
                             echo "<option value='" . $rowgame['game'] . "'>" . $rowgame['game'] . "</option>";
                         }

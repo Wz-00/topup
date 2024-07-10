@@ -10,7 +10,7 @@ function add_transaction($data) {
     $wa = $data["wa_number"];
     $gameid = $data["game_id"];
     $status = "Menunggu Pembayaran";
-    $waktu = date("Y-m-d H:i:s");
+    $waktu = date("2024-07-09 08:15:15");
 
     // Ambil uid dari session jika user sudah login, jika tidak biarkan kosong
     $uid = isset($_SESSION['username']) ? getUserIdByUsername($conn, $_SESSION['username']) : NULL;

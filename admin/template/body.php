@@ -38,9 +38,25 @@ $bn = $conn->query($ban);
                                 <span class="visually-hidden">Next</span>
                             </button>
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <?php
+                                $i = 0;
+                                $y = 1;
+                                if ($resban = mysqli_query($conn, $ban)) :
+
+                                    // Return the number of rows in resban set
+                                    $rowcount = mysqli_num_rows($resban);
+
+                                    while ($i < $rowcount) :
+                                        if ($i == 0) :
+                                            echo '<button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="' . $i . '" class="active" aria-current="true" aria-label="Slide ' . $y . '"></button>';
+                                        else :
+                                            echo '<button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="' . $i . '" aria-label="Slide' . $y . '"></button>';
+                                        endif;
+                                        $i++;
+                                        $y++;
+                                    endwhile;
+                                endif;
+                                ?>
                             </div>
             </div>
         </div>
